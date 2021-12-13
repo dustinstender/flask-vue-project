@@ -1,11 +1,15 @@
 from flask import Flask, render_template
+import requests
+import json
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return render_template('index.html',)
+    req = requests.get('https://cat-fact.herokuapp.com/facts')
+    data = json.loads(req.content)
+    return render_template('index.html', data=data)
 
 
 @app.route('/about')
